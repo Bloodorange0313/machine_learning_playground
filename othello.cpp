@@ -123,16 +123,15 @@ bool put_disk(int x, int y, int player){
       if(list_flippable_disk2(x, y, i, j, player) != false){
 
         cells[i][j] = player;
-        /*
-        //flippableに追加されたものを入れる必要がある。
-        for(int s = 0; s < board_size; ++s){
-          for(int t = 0; t < board_size; ++t){
-            if(list_flippable_disk2(i, j, t, s, player) == true){
-              cells[s][t] = player;
-            }
-          }
-        }
-        */
+        
+      }
+    }
+  }
+  for(int i = board_size - 1; i >= 0; --i){
+    for(int j = board_size - 1; j >= 0; --j){
+      if(list_flippable_disk2(x, y, i, j, player) != false){
+
+        cells[i][j] = player;
         
       }
     }
@@ -269,7 +268,7 @@ int main(){
   
   int player = 0;
   
-  while(!game_finish_judge(player)){
+  while(putable(1) != false && putable(0) != false){//!game_finish_judge(player)
     if(player==0){
       cout << "白のターンです" << endl;
       cout << "現在の白の個数　" << get_white_disk() << endl;
