@@ -220,7 +220,7 @@ bool putable(int player){
 //ゲームの終了の判定
 bool game_finish_judge(int player){
   bool judge = false;
-  if(get_black_disk() == 0 || get_white_disk() == 0){
+  if(get_black_disk() == 0 && get_white_disk() == 0){
     judge = true;
   }
   if(putable(player) == false){
@@ -302,14 +302,17 @@ int main(){
     
     
   }
+  if(game_finish_judge(player)){
+    if(get_white_disk() > get_black_disk()){
+      cout << "勝者は白です" << endl;
+    }else if(get_black_disk() > get_white_disk()){
+      cout << "勝者は黒です" << endl;
+    }else{
+      cout << "引き分けです" << endl;
+    }
   
-  if(get_white_disk() > get_black_disk()){
-    cout << "勝者は白です" << endl;
-  }else if(get_black_disk() > get_white_disk()){
-    cout << "勝者は黒です" << endl;
-  }else{
-    cout << "引き分けです" << endl;
   }
+  
   
   
 }
