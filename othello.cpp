@@ -2,6 +2,7 @@
 
 #include<iostream>
 #include<vector>
+#include<random>
 
 using namespace std;
 
@@ -221,6 +222,19 @@ bool game_finish_judge(int player){
   return judge;
 }
 
+//ランダムプレーヤ
+int randomplayer(int player){
+  int index1, index2;
+  index1 = rand() % 8;
+  index2 = rand() % 8;
+  if(put_disk(index1, index2, player) == true){
+    return put_disk(index2, index1, player);
+  }
+  else{
+    randomplayer(player);
+  }
+}
+
 int main(){
   //cout << board_initialize(3,3) << endl;
   for(int i = 0; i < board_size; ++i){
@@ -233,11 +247,17 @@ int main(){
   }
   
   int player = 0;
+  //どちらも人間
+  /*
   while(!game_finish_judge(player)){
     if(player==0){
       cout << "白のターンです" << endl;
+      cout << "現在の白の個数　" << get_white_disk() << endl;
+      cout << "現在の黒の個数　" << get_black_disk() << endl;
     }else{
       cout << "黒のターンです" << endl;
+      cout << "現在の黒の個数　" << get_black_disk() << endl;
+      cout << "現在の白の個数　" << get_white_disk() << endl;
     }
     
     show_board();
@@ -256,9 +276,45 @@ int main(){
     }
     
   }
+  */
+  while(!game_finish_judge(player)){
+    if(player==0){
+      cout << "白のターンです" << endl;
+      cout << "現在の白の個数　" << get_white_disk() << endl;
+      cout << "現在の黒の個数　" << get_black_disk() << endl;
+    }else{
+      cout << "黒のターンです" << endl;
+      cout << "現在の黒の個数　" << get_black_disk() << endl;
+      cout << "現在の白の個数　" << get_white_disk() << endl;
+    }
+    if(player == 1){
+      show_board();
+      randomplayer(1);
+      
+    }
+    else{
+      show_board();
+      cout << "場所を選んでください" << endl;
+      cin >> index1 >> index2;
+      if(put_disk(index2, index1, player) != false){
+        //put_disk(index1, index2, player);
+        put_disk(index2, index1, player);
+      }
+      
+    }
+    if(player==1){
+      player = 0;
+      //cout << "白のターンです" << endl;
+    }else{
+      player = 1;
+      //cout << "黒のターンです" << endl;
+    }
+    
+    
+  }
   if(get_white_disk > get_black_disk){
     cout << "勝者は白です" << endl;
-  }else if(get_white_disk > get_black_disk){
+  }else if(get_black_disk > get_white_disk){
     cout << "勝者は黒です" << endl;
   }else{
     cout << "引き分けです" << endl;
