@@ -4,6 +4,13 @@
 #include<vector>
 #include<random>
 
+#include <time.h>
+
+inline void InitRand()
+{
+    srand((unsigned int)time(NULL));
+}
+
 using namespace std;
 
 int white = 0;
@@ -227,15 +234,29 @@ int randomplayer(int player){
   int index1, index2;
   index1 = rand() % 8;
   index2 = rand() % 8;
-  if(put_disk(index1, index2, player) == true){
+  if(put_disk(index2, index1, player) == true){
     return put_disk(index2, index1, player);
   }
   else{
-    randomplayer(player);
+    return randomplayer(player);
   }
 }
 
+int human_player(int player){
+  int index1, index2;
+  cout << "場所を選んでください" << endl;
+  cin >> index1 >> index2;
+  if(put_disk(index2, index1, player) != false){
+    //put_disk(index1, index2, player);
+    return put_disk(index2, index1, player);
+  }else{
+    return human_player(player);
+  }
+  
+}
+
 int main(){
+  InitRand();
   //cout << board_initialize(3,3) << endl;
   for(int i = 0; i < board_size; ++i){
     for(int j = 0; j < board_size; ++j){
@@ -247,8 +268,7 @@ int main(){
   }
   
   int player = 0;
-  //どちらも人間
-  /*
+  
   while(!game_finish_judge(player)){
     if(player==0){
       cout << "白のターンです" << endl;
@@ -259,34 +279,7 @@ int main(){
       cout << "現在の黒の個数　" << get_black_disk() << endl;
       cout << "現在の白の個数　" << get_white_disk() << endl;
     }
-    
-    show_board();
-    cout << "場所を選んでください" << endl;
-    cin >> index1 >> index2;
-    if(put_disk(index2, index1, player) != false){
-      //put_disk(index1, index2, player);
-      put_disk(index2, index1, player);
-      if(player==1){
-        player = 0;
-        //cout << "白のターンです" << endl;
-      }else{
-        player = 1;
-        //cout << "黒のターンです" << endl;
-      }
-    }
-    
-  }
-  */
-  while(!game_finish_judge(player)){
-    if(player==0){
-      cout << "白のターンです" << endl;
-      cout << "現在の白の個数　" << get_white_disk() << endl;
-      cout << "現在の黒の個数　" << get_black_disk() << endl;
-    }else{
-      cout << "黒のターンです" << endl;
-      cout << "現在の黒の個数　" << get_black_disk() << endl;
-      cout << "現在の白の個数　" << get_white_disk() << endl;
-    }
+    //黒の石はランダムプレーヤー
     if(player == 1){
       show_board();
       randomplayer(1);
@@ -294,12 +287,9 @@ int main(){
     }
     else{
       show_board();
-      cout << "場所を選んでください" << endl;
-      cin >> index1 >> index2;
-      if(put_disk(index2, index1, player) != false){
-        //put_disk(index1, index2, player);
-        put_disk(index2, index1, player);
-      }
+      //human_player(0);
+      randomplayer(0);
+     
       
     }
     if(player==1){
@@ -312,28 +302,14 @@ int main(){
     
     
   }
-  if(get_white_disk > get_black_disk){
+  
+  if(get_white_disk() > get_black_disk()){
     cout << "勝者は白です" << endl;
-  }else if(get_black_disk > get_white_disk){
+  }else if(get_black_disk() > get_white_disk()){
     cout << "勝者は黒です" << endl;
   }else{
     cout << "引き分けです" << endl;
   }
-  /*
   
-  for(int i = 0; i < board_size; ++i){
-    for(int j = 0; j < board_size; ++j){
-      cout << list_flippable_disk2(3, 5,i,j, white); //<< endl;
-      
-      //cout << list_flippable_disk2(1, 5,i,j, white); //<< endl;
-    }
-    cout << endl;
-    
-  }
-  cout << list_flippable_disk2(3, 5, 3, 4, white) << endl;;
-  //cout << put_disk(3, 4, white) << endl;
-  cout << put_disk(3, 5, white) << endl;
-  //cout << put_disk(4, 5, black) << endl;
-  show_board();
-  */
+  
 }
