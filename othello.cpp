@@ -16,7 +16,7 @@ using namespace std;
 int white = 0;
 int black = 1;
 int board_size = 8;
-int cells[8][8];
+int cells[9][9];
 int index1, index2;
 
 //ボードを初期化する
@@ -279,12 +279,12 @@ int main(){
       cout << "現在の白の個数　" << get_white_disk() << endl;
     }
     //黒の石はランダムプレーヤー
-    if(player == 1){
+    if(player == 1 && putable(1) != false){
       show_board();
       randomplayer(1);
       
     }
-    else{
+    else if(player == 0 && putable(0) != false){
       show_board();
       //human_player(0);
       randomplayer(0);
