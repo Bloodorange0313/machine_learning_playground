@@ -168,7 +168,7 @@ void show_board(){
 
 int winner = -1;
 
-
+/*
 //白の石の個数を数える
 int get_white_disk(){
   int cnt = 0;
@@ -188,6 +188,19 @@ int get_black_disk(){
   for(int i = 0; i < board_size; ++i){
     for(int j = 0; j < board_size; ++j){
       if(cells[i][j] == 1){
+        cnt++;
+      }
+    }
+  }
+  return cnt;
+}
+*/
+
+int get_count_disk(int player){
+  int cnt = 0;
+  for(int i = 0; i < board_size; ++i){
+    for(int j = 0; j < board_size; ++j){
+      if(cells[i][j] == player){
         cnt++;
       }
     }
@@ -216,7 +229,7 @@ bool putable(int player){
 //ゲームの終了の判定
 bool game_finish_judge(int player){
   bool judge = false;
-  if(get_black_disk() == 0 && get_white_disk() == 0){
+  if(get_count_disk(1) == 0 && get_count_disk(0) == 0){
     judge = true;
   }
   if(putable(player) == false){
