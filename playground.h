@@ -49,12 +49,16 @@ bool list_flippable_disk2(int x, int y, int s, int t, int player){
       }
       vector<pair<int, int>>tmp;
       int depth = 0;
+      
       while(true){
+        
         depth++;
         int rx = x + (direction[dx] * depth);
         int ry = y + (direction[dy] * depth);
+        
         if(0 <= rx && rx < board_size && 0 <= ry && ry < board_size){
           int request = cells[ry][rx];
+          
           if(request == -1){
             break;
           }
@@ -69,12 +73,19 @@ bool list_flippable_disk2(int x, int y, int s, int t, int player){
               }
             }
           }
+          
           else{
+            
             tmp.push_back(make_pair(rx, ry));
+            
+            
           }
         }else{
+
+            
           break;
         }
+        //depth++;
       }
     }
   }

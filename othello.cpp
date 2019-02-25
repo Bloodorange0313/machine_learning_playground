@@ -113,7 +113,6 @@ int minimax_player(int player, int depth){
 }
 
 
-
 int main(){
   InitRand();
   //cout << board_initialize(3,3) << endl;
