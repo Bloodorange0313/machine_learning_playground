@@ -45,13 +45,7 @@ int human_player(int player){
   }
 }
 
-int player_reverse(int player){
-  if(player == 1){
-    return 0;
-  }else{
-    return 1;
-  }
-}
+
 
 
 //ボードの最初の位置を記憶する必要がある
