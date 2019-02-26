@@ -156,7 +156,7 @@ int main(){
     
     
   }
-  if(game_finish_judge(player)){
+  if(!game_finish_judge(player)){
     if(get_count_disk(0) > get_count_disk(1)){
       cout << "勝者は白です" << endl;
     }else if(get_count_disk(1) > get_count_disk(0)){
