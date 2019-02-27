@@ -45,7 +45,7 @@ int player_reverse(int player){
 }
 
 //(x, y)に置いた時に、(s, t)をひっくり返すことができるか
-//dx = 1のとき、1つしか反転しないバグがある
+//dx = 1||dy = 1のとき、1つしか反転しないバグがある
 bool list_flippable_disk2(int x, int y, int s, int t, int player){
   //int prev = -1;
   //int next = 1;
@@ -54,17 +54,20 @@ bool list_flippable_disk2(int x, int y, int s, int t, int player){
   vector<pair<int, int> >flippable;
   for(int dy = -1; dy < 2; ++dy){
     for(int dx = -1; dx < 2; ++dx){
-      if(dx != 0 || dy != 0){
+      
+      
+      //if(!(dx == 0 && dy == 0)){
         //continue;
         //break;
-        vector<pair<int, int>>tmp;
         int depth = 0;
+        vector<pair<int, int> >tmp;
         while(true){
+          //if(!(dx == 0 && dy == 0)){
           depth++;
           int rx = x + (dx * depth);
           int ry = y + (dy * depth);
-        
-          if(0 <= rx && rx < board_size && 0 <= ry && ry < board_size){
+
+          if(0 <= rx && rx < board_size && 0 <= ry && ry < board_size && (rx != x || ry != y)){
             int request = cells[ry][rx];
             if(request == -1){
               break;
@@ -74,7 +77,7 @@ bool list_flippable_disk2(int x, int y, int s, int t, int player){
               break;
             }
             if(request == player){
-              if(depth > 1){
+              if(!tmp.empty()){
                 //flippableにtmpの石を追加したい
                 int cnt = tmp.size();
                 while(cnt > 0){
@@ -82,6 +85,7 @@ bool list_flippable_disk2(int x, int y, int s, int t, int player){
                   cnt--;
                   //flippable.erase(flippable.front());
                   tmp.pop_back();
+                  //cells[flippable[cnt].second][flippable[cnt].first] = player;
                 }
                 break;
               }
@@ -91,26 +95,30 @@ bool list_flippable_disk2(int x, int y, int s, int t, int player){
           }else{
             break;
           }
+          //}
           //depth++;
         }
-      }
+      //}//else{
+        //break;
+        //continue;
+      //}
       
     }
   }
-
-
-
   
   if(flippable.empty()){
     return false;
   }
   bool dd = false;
+  
   for(int i = 0; i < flippable.size(); ++i){
-      
       if(flippable[i].first == s && flippable[i].second == t){
         dd = true;
+        
       }
   }
+  
+  
   return dd;
   //flippable.clear();
 }
@@ -123,18 +131,18 @@ bool put_disk(int x, int y, int player){
     return false;
   }
   //獲得できる石がないときも置くことができない
-  bool flippable = false;//list_flippable_disk(x, y, player);
+  bool flippable2 = false;//list_flippable_disk(x, y, player);
   
   for(int j = 0; j < board_size; ++j){
     for(int i = 0; i < board_size; ++i){
       if(list_flippable_disk2(x, y, i, j, player) == true){
-        flippable = true;
+        flippable2 = true;
       }
     }
   }
   
   //vector<int>flippable;
-  if(flippable == false){
+  if(flippable2 == false){
     return false;
   }
 
@@ -150,16 +158,6 @@ bool put_disk(int x, int y, int player){
     }
   }
   
-  for(int j = board_size - 1; j >= 0; --j){
-    for(int i = board_size - 1; i >= 0; --i){
-      if(list_flippable_disk2(x, y, i, j, player) != false){
-
-        cells[j][i] = player;
-        
-      }
-    }
-  }
-
   
   
   return true;
@@ -173,14 +171,14 @@ void show_board(){
     cout << i << "-";
   }
   cout << endl;
-  for(int i = 0; i < board_size; ++i){
-    for(int j = 0; j < board_size; ++j){
+  for(int j = 0; j < board_size; ++j){
+    for(int i = 0; i < board_size; ++i){
       //cells[j][i] = board_initialize(i, j);
     }
   }
-  for(int i = 0; i < board_size; ++i){
-    cout << i << " ";
-    for(int j = 0; j < board_size; ++j){
+  for(int j = 0; j < board_size; ++j){
+    cout << j << " ";
+    for(int i = 0; i < board_size; ++i){
       //put_disk(i, j, player);
       //cout << j << " ";
       if(cells[j][i] == white){
@@ -227,8 +225,8 @@ int get_black_disk(){
 
 int get_count_disk(int player){
   int cnt = 0;
-  for(int i = 0; i < board_size; ++i){
-    for(int j = 0; j < board_size; ++j){
+  for(int j = 0; j < board_size; ++j){
+    for(int i = 0; i < board_size; ++i){
       if(cells[j][i] == player){
         cnt++;
       }
@@ -241,10 +239,10 @@ int get_count_disk(int player){
 bool putable(int player){
   bool judge = false;
   
-  for(int i = 0; i < board_size; ++i){
-    for(int j = 0; j < board_size; ++j){
-      for(int x = 0; x < board_size; ++x){
-        for(int y = 0; y < board_size; ++y){
+  for(int j = 0; j < board_size; ++j){
+    for(int i = 0; i < board_size; ++i){
+      for(int y = 0; y < board_size; ++y){
+        for(int x = 0; x < board_size; ++x){
           if(list_flippable_disk2(i, j, x, y, player) == true){
             judge = true;
           }

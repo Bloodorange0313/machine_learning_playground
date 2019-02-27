@@ -110,13 +110,13 @@ int minimax_player(int player, int depth){
 int main(){
   InitRand();
   //cout << board_initialize(3,3) << endl;
-  for(int i = 0; i < board_size; ++i){
-    for(int j = 0; j < board_size; ++j){
+  for(int j = 0; j < board_size; ++j){
+    for(int i = 0; i < board_size; ++i){
       //cout << board_initialize(i, j);
       board_initialize(i, j); //cellsの初期化
       
     }
-    cout << endl;
+    //cout << endl;
   }
   
   int player = 0;
@@ -153,10 +153,8 @@ int main(){
       player = 1;
       //cout << "黒のターンです" << endl;
     }
-    
-    
   }
-  if(!game_finish_judge(player)){
+  if(game_finish_judge(player)){
     if(get_count_disk(0) > get_count_disk(1)){
       cout << "勝者は白です" << endl;
     }else if(get_count_disk(1) > get_count_disk(0)){
