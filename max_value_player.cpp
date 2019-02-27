@@ -15,7 +15,6 @@ using namespace std;
 
 
 //ボードの最初の位置を記憶する必要がある
-//ミニマックス法による
 //次の手が最大になるように選択する
 
 vector<pair<int, int> >pd;
