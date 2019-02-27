@@ -12,29 +12,6 @@ inline void InitRand(){
 }
 
 using namespace std;
-/*
-int white = 0;
-int black = 1;
-int board_size = 8;
-int cells[9][9];
-int index1, index2;
-*/
-
-
-
-int human_player(int player){
-  int index1, index2;
-  cout << "場所を選んでください" << endl;
-  cin >> index1 >> index2;
-  if(put_disk(index2, index1, player) != false){
-    //put_disk(index1, index2, player);
-    return put_disk(index2, index1, player);
-  }else{
-    return human_player(player);
-  }
-}
-
-
 
 
 //ボードの最初の位置を記憶する必要がある
@@ -42,7 +19,7 @@ int human_player(int player){
 //次の手が最大になるように選択する
 
 vector<pair<int, int> >pd;
-int minimax_player(int player, int depth){
+int max_value_player(int player){
   int index1 = 0, index2 = 0;
   int value = 0;
 
@@ -131,7 +108,7 @@ int main(){
       show_board();
       //human_player(0);
       //randomplayer(0);
-      minimax_player(0,0);
+      max_value_player(0);
      
       
     }

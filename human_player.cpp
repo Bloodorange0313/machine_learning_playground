@@ -21,7 +21,6 @@ int index1, index2;
 */
 
 
-
 int human_player(int player){
   int index1, index2;
   cout << "場所を選んでください" << endl;
@@ -37,63 +36,6 @@ int human_player(int player){
 
 
 
-//ボードの最初の位置を記憶する必要がある
-//ミニマックス法による
-//次の手が最大になるように選択する
-
-vector<pair<int, int> >pd;
-int minimax_player(int player, int depth){
-  int index1 = 0, index2 = 0;
-  int value = 0;
-
-  
-
-  
-  for(int i = 0; i < board_size; ++i){
-    for(int j = 0; j < board_size; ++j){
-
-      //同時にひっくり返された者を元に戻したい
-      for(int s = 0; s < board_size; ++s){
-          for(int t = 0; t < board_size; ++t){
-            if(list_flippable_disk2(i, j, s, t, player) == true){
-              //cells[s][t] = player_reverse(player);
-              pd.push_back(make_pair(s, t));
-            }
-          }
-      }
-      
-      if(put_disk(i, j,player) == true){
-        //put_disk(i, j, player);
-        if(value < get_count_disk(player)){
-          value = get_count_disk(player);
-          index2 = j;
-          index1 = i;
-          //cout << value << endl;
-        }
-        //元に戻す処理
-        cells[j][i] = -1;
-        
-        for(int g = 0; g < pd.size(); ++g){
-          cells[pd[g].second][pd[g].first] = player_reverse(player);
-          //cout << pd[g].first << endl;
-        }
-      }
-      
-      for(int g = 0; g < pd.size(); ++g){
-          pd.pop_back();
-      }
-    }
-  }
-  
-  
-  cout << value << endl;
-  
-  //cout << index2 << endl;
-  //cout << index1 << endl;
-  
-  //cout << get_count_disk(player) << endl;
-  return put_disk(index1, index2, player);
-}
 
 
 int main(){
@@ -125,13 +67,14 @@ int main(){
       show_board();
       //minimax_player(1, 0);
       randomplayer(1);
+      //human_player(0);
       
     }
     else if(player == 0 && putable(0) != false){
       show_board();
       //human_player(0);
       //randomplayer(0);
-      minimax_player(0,0);
+      human_player(0);
      
       
     }

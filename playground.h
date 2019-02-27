@@ -52,6 +52,7 @@ bool list_flippable_disk2(int x, int y, int s, int t, int player){
   //int direction[3] = {prev, 0, next};
   
   vector<pair<int, int> >flippable;
+  
   for(int dy = -1; dy < 2; ++dy){
     for(int dx = -1; dx < 2; ++dx){
       if(!(dx == 0 && dy == 0)){
@@ -104,6 +105,9 @@ bool list_flippable_disk2(int x, int y, int s, int t, int player){
     }
   }
 
+
+  
+
   
   
   if(flippable.empty()){
@@ -117,6 +121,7 @@ bool list_flippable_disk2(int x, int y, int s, int t, int player){
         
       }
   }
+  
   
   
   return dd;
@@ -265,4 +270,17 @@ bool game_finish_judge(int player){
     judge = true;
   }
   return judge;
+}
+
+//ランダムプレーヤ
+int randomplayer(int player){
+  int index1, index2;
+  index1 = rand() % 8;
+  index2 = rand() % 8;
+  if(put_disk(index2, index1, player) == true){
+    return put_disk(index2, index1, player);
+  }
+  else{
+    return randomplayer(player);
+  }
 }
