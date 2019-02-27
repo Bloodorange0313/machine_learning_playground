@@ -10,7 +10,7 @@ using namespace std;
 int white = 0;
 int black = 1;
 int board_size = 8;
-int cells[8][8];
+int cells[9][9];
 int index1, index2;
 
 
@@ -54,9 +54,7 @@ bool list_flippable_disk2(int x, int y, int s, int t, int player){
   vector<pair<int, int> >flippable;
   for(int dy = -1; dy < 2; ++dy){
     for(int dx = -1; dx < 2; ++dx){
-      
-      
-      //if(!(dx == 0 && dy == 0)){
+      if(!(dx == 0 && dy == 0)){
         //continue;
         //break;
         int depth = 0;
@@ -67,7 +65,7 @@ bool list_flippable_disk2(int x, int y, int s, int t, int player){
           int rx = x + (dx * depth);
           int ry = y + (dy * depth);
 
-          if(0 <= rx && rx < board_size && 0 <= ry && ry < board_size && (rx != x || ry != y)){
+          if(0 <= rx && rx < board_size && 0 <= ry && ry < board_size ){
             int request = cells[ry][rx];
             if(request == -1){
               break;
@@ -98,13 +96,15 @@ bool list_flippable_disk2(int x, int y, int s, int t, int player){
           //}
           //depth++;
         }
-      //}//else{
-        //break;
+      }else{
+        break;
         //continue;
-      //}
+      }
       
     }
   }
+
+  
   
   if(flippable.empty()){
     return false;
@@ -157,9 +157,6 @@ bool put_disk(int x, int y, int player){
       }
     }
   }
-  
-  
-  
   return true;
   
 }
@@ -250,8 +247,11 @@ bool putable(int player){
       }
     }
   }
+
   return true;
 }
+
+
 
 //ゲームの終了の判定
 bool game_finish_judge(int player){

@@ -141,8 +141,8 @@ int main(){
     else if(player == 0 && putable(0) != false){
       show_board();
       //human_player(0);
-      randomplayer(0);
-      //minimax_player(0,0);
+      //randomplayer(0);
+      minimax_player(0,0);
      
       
     }
